@@ -1,0 +1,39 @@
+---
+title: 'Map to The Royal Palace'
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+author: "Mats"
+date: "24 september 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Welcome to the Royal Palace in Stockholm Sweden
+Welcome to one of the largest palaces in Europe! The Royal Palace is the official residence of His Majesty the King of Sweden, with over 600 rooms. Source and for more information visit https://www.visitstockholm.com/see--do/attractions/the-royal-palace/
+
+```{r, echo=FALSE}
+library(leaflet)
+crownIcon <- makeIcon(
+  iconUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Tudor_Crown_%28Heraldry%29.svg/330px-Tudor_Crown_%28Heraldry%29.svg.png",
+  iconWidth = 50*215/230, iconHeight = 50,
+  iconAnchorX = 50*215/230/2, iconAnchorY = 30
+)
+
+palaceSite <- "<a href='https://www.kungligaslotten.se/english/royal-palaces-and-sites/the-royal-palace.html'>The Royal Palace, Stockholm Sweden</a>"
+
+palaceLatLong <- data.frame(
+  lat = c(59.3269),
+  lng = c(18.0715))
+
+palaceLatLong %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = crownIcon, popup = palaceSite)
+
+```
